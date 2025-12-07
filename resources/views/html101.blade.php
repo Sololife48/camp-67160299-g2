@@ -128,7 +128,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="dataConsent" required>
                             <label class="form-check-label" for="dataConsent">
-                                ยินยอมให้เก็บข้อมูล (ต้องเลือก)
+                                ยินยอมให้เก็บข้อมูล
                             </label>
                         </div>
                     </div>
@@ -136,8 +136,8 @@
 
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        <button type="reset" class="btn btn-outline-secondary px-4"><i class="bi bi-x-circle"></i> ล้างข้อมูล</button>
-                        <button type="submit" class="btn btn-success px-4"><i class="bi bi-check-circle"></i> ยืนยันข้อมูล</button>
+                        <button type="reset" class="btn btn-outline-secondary px-4"><i class="bi bi-x-circle"></i> Reset</button>
+                        <button type="submit" class="btn btn-success px-4"><i class="bi bi-check-circle"></i> Submit</button>
                     </div>
                 </div>
             </form>
