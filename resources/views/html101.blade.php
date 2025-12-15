@@ -1,45 +1,39 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <title>Workshop HTML Form (ตกแต่งแล้ว)</title>
+@extends('template.default')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
+<style>
+    /* ลบ Icon ติ๊กถูก/ผิด ของ Bootstrap ออกเพื่อให้ดูสะอาดตาเหมือนรูปตัวอย่าง */
+    .form-control.is-valid, .was-validated .form-control:valid,
+    .form-control.is-invalid, .was-validated .form-control:invalid,
+    .form-select.is-valid, .was-validated .form-select:valid,
+    .form-select.is-invalid, .was-validated .form-select:invalid {
+        background-image: none !important;
+        padding-right: 0.75rem;
+    }
+    
+    /* ปรับสีข้อความแจ้งเตือนให้ชัดเจน */
+    .invalid-feedback { color: #dc3545; font-size: 0.875em; }
+    .valid-feedback { color: #198754; font-size: 0.875em; }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f8f9fa;
-        }
-        .form-box {
-            max-width: 550px;
-            margin: 30px auto;
-        }
-        textarea {
-            height: 120px;
-        }
-    </style>
-</head>
-<body>
+    /* CSS สำหรับซ่อน Input "อื่นๆ" */
+    .d-none { display: none !important; }
+</style>
 
 <div class="container mt-5">
     <h2 class="text-center mb-4 text-primary fw-bold">📝 Workshop #HTML - FORM</h2>
     
-
     <div class="card shadow-lg form-box">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">ข้อมูลส่วนตัว</h5>
         </div>
         <div class="card-body">
-            <form>
+            <form id="workshopForm" class="needs-validation" novalidate>
+                
                 <div class="row mb-3 align-items-center">
                     <label for="firstName" class="col-sm-4 col-form-label">ชื่อ</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="firstName" placeholder="กรุณาใส่ชื่อของคุณ" required>
+                        <div class="invalid-feedback">กรุณากรอกชื่อ</div>
                     </div>
                 </div>
 
@@ -47,20 +41,23 @@
                     <label for="lastName" class="col-sm-4 col-form-label">สกุล</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="lastName" placeholder="กรุณาใส่นามสกุลของคุณ" required>
+                        <div class="invalid-feedback">กรุณากรอกนามสกุล</div>
                     </div>
                 </div>
 
                 <div class="row mb-3 align-items-center">
                     <label for="birthDate" class="col-sm-4 col-form-label">วัน/เดือน/ปีเกิด</label>
                     <div class="col-sm-8">
-                        <input type="date" class="form-control" id="birthDate">
+                        <input type="date" class="form-control" id="birthDate" required>
+                        <div class="invalid-feedback">ระบุวันเกิด</div>
                     </div>
                 </div>
 
                 <div class="row mb-3 align-items-center">
                     <label for="age" class="col-sm-4 col-form-label">อายุ</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" id="age" placeholder="ปี" min="1" max="150">
+                        <input type="number" class="form-control" id="age" placeholder="ปี" min="1" max="150" required>
+                        <div class="invalid-feedback">ระบุอายุ</div>
                     </div>
                 </div>
 
@@ -68,75 +65,91 @@
                     <label class="col-sm-4 col-form-label">เพศ</label>
                     <div class="col-sm-8">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="male" value="ชาย">
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="ชาย" required>
                             <label class="form-check-label" for="male">ชาย</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="gender" id="female" value="หญิง">
+                            <input class="form-check-input" type="radio" name="gender" id="female" value="หญิง" required>
                             <label class="form-check-label" for="female">หญิง</label>
                         </div>
+                        <div class="invalid-feedback">กรุณาระบุเพศ</div>
+                        <div class="valid-feedback">ระบุเพศเรียบร้อย</div>
                     </div>
                 </div>
 
                 <div class="row mb-3 align-items-center">
                     <label for="profilePic" class="col-sm-4 col-form-label">รูป</label>
                     <div class="col-sm-8">
-                        <input type="file" class="form-control" id="profilePic">
+                        <input type="file" class="form-control" id="profilePic" required>
+                        <div class="invalid-feedback">กรุณาอัปโหลดรูปภาพ</div>
                     </div>
                 </div>
                 
-                <hr> <div class="row mb-3">
+                <hr> 
+                
+                <div class="row mb-3">
                     <label for="address" class="col-sm-4 col-form-label">ที่อยู่</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" id="address" placeholder="ที่อยู่ปัจจุบัน"></textarea>
+                        <textarea class="form-control" id="address" placeholder="ที่อยู่ปัจจุบัน" required></textarea>
+                        <div class="invalid-feedback">กรุณากรอกที่อยู่</div>
                     </div>
                 </div>
 
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3 align-items-top">
                     <label for="favColor" class="col-sm-4 col-form-label">สีที่ชอบ</label>
                     <div class="col-sm-8">
-                        <select class="form-select" id="favColor">
-                            <option selected disabled>เลือกสีที่คุณชอบ</option>
+                        <select class="form-select" id="favColor" required>
+                            <option selected disabled value="">เลือกสีที่คุณชอบ</option>
                             <option value="red">สีแดง</option>
                             <option value="green">สีเขียว</option>
                             <option value="blue">สีน้ำเงิน</option>
                             <option value="yellow">สีเหลือง</option>
+                            <option value="other">อื่นๆ (ระบุเอง)</option>
                         </select>
+                        
+                        <input type="text" class="form-control mt-2 d-none" id="otherColorText" placeholder="ระบุสีที่ชอบ" disabled>
+
+                        <div class="invalid-feedback">กรุณาเลือกสีที่ชอบ</div>
                     </div>
                 </div>
 
-                <div class="row mb-3 align-items-center">
+                <div class="row mb-3 align-items-top">
                     <label class="col-sm-4 col-form-label">แนวเพลงที่ชอบ</label>
                     <div class="col-sm-8">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="music" id="lifeSong" value="เพื่อชีวิต">
+                            <input class="form-check-input" type="radio" name="music" id="lifeSong" value="เพื่อชีวิต" required>
                             <label class="form-check-label" for="lifeSong">เพื่อชีวิต</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="music" id="countrySong" value="ลูกทุ่ง">
+                            <input class="form-check-input" type="radio" name="music" id="countrySong" value="ลูกทุ่ง" required>
                             <label class="form-check-label" for="countrySong">ลูกทุ่ง</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="music" id="otherSong" value="อื่นๆ">
+                            <input class="form-check-input" type="radio" name="music" id="otherSong" value="other" required>
                             <label class="form-check-label" for="otherSong">อื่นๆ</label>
                         </div>
+
+                        <input type="text" class="form-control mt-2 d-none" id="otherMusicText" placeholder="ระบุแนวเพลง" disabled>
+
+                        <div class="invalid-feedback">กรุณาเลือกแนวเพลง</div>
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="dataConsent" required>
+                            <input class="form-check-input" type="checkbox" value="yes" id="dataConsent" required>
                             <label class="form-check-label" for="dataConsent">
                                 ยินยอมให้เก็บข้อมูล
                             </label>
+                            <div class="invalid-feedback">คุณต้องกดยินยอม</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        <button type="reset" class="btn btn-outline-secondary px-4"><i class="bi bi-x-circle"></i> Reset</button>
+                        <button type="reset" class="btn btn-outline-secondary px-4" id="resetBtn"><i class="bi bi-x-circle"></i> Reset</button>
                         <button type="submit" class="btn btn-success px-4"><i class="bi bi-check-circle"></i> Submit</button>
                     </div>
                 </div>
@@ -144,9 +157,74 @@
         </div>
     </div>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection
+
+@push("scripts")
+<script>
+    (() => {
+        'use strict'
+        const form = document.getElementById('workshopForm')
+        const resetBtn = document.getElementById('resetBtn')
+        
+        // --- 1. Logic ช่อง "สีอื่นๆ" ---
+        const favColorSelect = document.getElementById('favColor')
+        const otherColorInput = document.getElementById('otherColorText')
+
+        favColorSelect.addEventListener('change', function() {
+            if (this.value === 'other') {
+                otherColorInput.classList.remove('d-none')
+                otherColorInput.disabled = false
+                otherColorInput.required = true
+            } else {
+                otherColorInput.classList.add('d-none')
+                otherColorInput.disabled = true
+                otherColorInput.required = false
+                otherColorInput.value = '' 
+            }
+        })
+
+        // --- 2. Logic ช่อง "เพลงอื่นๆ" ---
+        const musicRadios = document.querySelectorAll('input[name="music"]')
+        const otherMusicInput = document.getElementById('otherMusicText')
+
+        musicRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    otherMusicInput.classList.remove('d-none')
+                    otherMusicInput.disabled = false
+                    otherMusicInput.required = true
+                } else {
+                    otherMusicInput.classList.add('d-none')
+                    otherMusicInput.disabled = true
+                    otherMusicInput.required = false
+                    otherMusicInput.value = ''
+                }
+            })
+        })
+
+        // --- 3. Validation Logic ---
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+                // ถ้าไม่ผ่าน: กรอบจะแดงอัตโนมัติจาก class was-validated
+            } else {
+                event.preventDefault()
+                // ถ้าผ่าน:
+                alert("ข้อมูลถูกต้องครบถ้วน! (Pass)")
+            }
+            
+            form.classList.add('was-validated')
+        }, false)
+
+        // ปุ่ม Reset
+        resetBtn.addEventListener('click', () => {
+            form.classList.remove('was-validated')
+            otherColorInput.classList.add('d-none');
+            otherMusicInput.classList.add('d-none');
+        })
+    })()
+</script>
+@endpush
