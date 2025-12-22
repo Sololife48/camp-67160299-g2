@@ -27,7 +27,7 @@
         background-image: none !important;
         padding-right: 0.75rem;
     }
-    
+
     /* ปรับสีข้อความแจ้งเตือนให้ชัดเจน */
     .invalid-feedback { color: #dc3545; font-size: 0.875em; }
     .valid-feedback { color: #198754; font-size: 0.875em; }
@@ -35,10 +35,11 @@
     /* CSS สำหรับซ่อน Input "อื่นๆ" */
     .d-none { display: none !important; }
     </style>
+    @stack('style')
 </head>
 <body>
-    <div class="container">
-         <h1>template/default.blade.php</h1>
+    <div class="container mt-4">
+        <h1>@yield('header1')</h1>
          @yield('content')
     </div>
     @stack('scripts')
